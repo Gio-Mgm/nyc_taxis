@@ -37,29 +37,34 @@ print("Set colomns : check")
 print("Calculated columns  : 33%")
 
 # Create 'distance' column
-df["distance"] = df.apply(
-    lambda x: round(
-        great_circle_distance(
+df["distance_km"] = df.apply(
+    lambda x: great_circle_distance(
             x.pickup_latitude, x.pickup_longitude, x.dropoff_latitude, x.dropoff_longitude
-    )), axis=1
+    ) / 1000, axis=1
 )
 print("Calculated columns  : 66%")
 
 #Create columns distancepertime
-df["distancepertime"] = df.apply(
+df["km_per_hour"] = df.apply(
     lambda x: round(
-        x.distance/x.trip_duration*3.6
+        x.distance_km * 3600 / x.trip_duration
     ), axis=1
 )
 
-# Remove outliers
-df = df.drop(df[df.distancepertime > 150].index)
-df = df.drop(df[df.distance > 100000].index)
-df = df.drop(df[df.trip_duration > 70000].index)
+# Remove outliers for dirty_train.csv
+#df = df.drop(df[df.km_per_hour > 150].index)
+#df = df.drop(df[df.distance_km > 100].index)
+#df = df.drop(df[df.trip_duration > 70000].index)
+
+# Remove outliers for train.csv
+df = df.drop(df[df.km_per_hour > 150].index)
+df = df.drop(df[df.distance_km > 20].index)
+df = df.drop(df[df.trip_duration > 40000].index)
     
 print("Calculated columns  : check")
 
 #Save data to CSV
-df.to_csv('./data/02_intermediate/dirty_train.csv', encoding='utf-8')
+#df.to_csv('./data/02_intermediate/dirty_train.csv', encoding='utf-8')
+df.to_csv('./data/02_intermediate/train.csv', encoding='utf-8')
 
-print("Save Ready in /data folder")
+print("Data saved!")

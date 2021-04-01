@@ -1,3 +1,4 @@
 archive/
 data/
 src/__pycache__/
+notebooks/__pycache__/
