@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Foobar.py: Description of what foobar does."""
+"""data_cleaning.py: Cleaning of datas for exercice"""
 
 __author__ = "Antoine,  Giovanny"
 __copyright__ = "Copyright 2021, The Taxi Project"
